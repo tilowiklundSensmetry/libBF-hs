@@ -27,10 +27,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#if defined(__x86_64__)
+// https://stackoverflow.com/questions/5272825/detecting-64bit-compile-in-c/61017823#61017823
+#if INTPTR_MAX == INT64_MAX
 #define LIMB_LOG2_BITS 6
-#else
+#elif INTPTR_MAX == INT32_MAX
 #define LIMB_LOG2_BITS 5
+#else
+#error Unknown pointer size or missing size macros!
 #endif
 
 #define LIMB_BITS (1 << LIMB_LOG2_BITS)
